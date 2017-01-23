@@ -1,0 +1,19 @@
+{
+  "name": "shor.ty",
+  "version": "1.0.0",
+  "description": "A poor man's URL l shortener",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nnchambs/jet-fuel.git"
+  },
+  "author": "Nick Chambers & Andrew Crist",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nnchambs/jet-fuel/issues"
+  },
+  "homepage": "https://github.com/nnchambs/jet-fuel#readme"
+}
