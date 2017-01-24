@@ -5,7 +5,7 @@ node_modules
 
 # testing
 coverage
-
+stat
 # misc
 .DS_Store
 .env
