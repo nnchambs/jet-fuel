@@ -1,6 +1,12 @@
-function hi() {
-  console.log('hi')
-}
+var folderInput = $('.folder-input').val()
+var folderSubmit = $('.folder-submit').val()
 
-
-document.querySelector('.folder-input').addEventListener('change', alert('suh') )
+$('.folder-submit').click(function(e) {
+  e.preventDefault()
+  var data = $('.folder-input').val()
+  $.ajax({
+    type: "POST",
+    url: 'http://localhost:3000/folders',
+    data: data,
+  })
+})
