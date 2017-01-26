@@ -20,9 +20,9 @@ app.locals.folders = [
   }
 ]
 
-app.locals.url = [
+app.locals.urls = [
   {
-    id: 123213,
+    id: 120938102983,
     folderId: 1,
     url: 'http://wwww.hahah.com',
     shortenedURL: 'short.ty/123213',
@@ -45,22 +45,20 @@ app.get('/folders', (request, response) => {
 app.post('/folders', (request, response) => {
   const id = Date.now()
   const folder = request.body.foldername
-  if(app.locals.folders[id]){
-    response.send('Duplicate folder, please rename the folder and then take a lap.')
-  } else {
     app.locals.folders.push({
       id: id,
       name: folder
     })
-    console.log('folders', app.locals.folders)
     response.json(app.locals.folders)
-  }
 })
 
-app.get('/folders/:folder_name', (request, response) => {
-  const { folderName } = request.params
-  console.log(app.locals.folders[folderName])
-  response.json(app.locals.folders[folderName])
+app.get('/folders/:folder_id', (request, response) => {
+  const { id } = request.params.folder_id
+  response.json(requestedFolder)
+})
+
+app.get('/urls', (request, response) => {
+  response.json(app.locals.urls)
 })
 
 app.listen(app.get('port'), () => {
