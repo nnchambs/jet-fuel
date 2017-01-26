@@ -11,3 +11,12 @@ $('.folder-submit').click(function(e) {
     data: data,
   })
 })
+
+$.get('/folders', function(data){
+  var folderList = $('.folder-list')
+  data.forEach(function(e){
+    $('.folder-list').append(
+      `<div class="${e.id}">${e.name}</div>`
+    )
+  })
+})
