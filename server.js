@@ -1,8 +1,9 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
-const path = require('path')
+const path = require('path');
+const shortid = require('shortid');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -64,11 +65,11 @@ app.get('/urls', (request, response) => {
 app.post('/urls', (request, response) => {
   const url = request.body.url
   app.locals.urls.push({
-    id: md5(url),
+    id: md5('url'),
     folderId: 1,
     url: url,
-    date: Date.now(),
-    shortenedURL: 'http://pe.ter/12309821308'
+    dateAdded: Date.now(),
+    shortenedURL: `shor.ty/${shortid.generate()}`
   })
   response.json(app.locals.urls)
 })
