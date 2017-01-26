@@ -43,7 +43,7 @@ app.get('/folders', (request, response) => {
 })
 
 app.post('/folders', (request, response) => {
-  const id = Date.now()
+  const id = md5('folderID')
   const folder = request.body.foldername
     app.locals.folders.push({
       id: id,
@@ -58,6 +58,18 @@ app.get('/folders/:folder_id', (request, response) => {
 })
 
 app.get('/urls', (request, response) => {
+  response.json(app.locals.urls)
+})
+
+app.post('/urls', (request, response) => {
+  const url = request.body.url
+  app.locals.urls.push({
+    id: md5(url),
+    folderId: 1,
+    url: url,
+    date: Date.now(),
+    shortenedURL: 'http://pe.ter/12309821308'
+  })
   response.json(app.locals.urls)
 })
 
