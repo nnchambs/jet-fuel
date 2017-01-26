@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/nnchambs/jet-fuel/issues"
   },
-  "homepage": "https://github.com/nnchambs/jet-fuel#readme"
+  "homepage": "https://github.com/nnchambs/jet-fuel#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.0",
+    "md5": "^2.2.1"
+  }
 }
