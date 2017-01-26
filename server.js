@@ -9,12 +9,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('port', process.env.Port || 3000)
 app.locals.title = 'Shor.ty'
-app.locals.folders = {
-  andrew: 'I am a banana',
-  coolsites: {
-    booyah: 'hahahah'
+app.locals.folders = [
+  {
+    id: 120938102983,
+    name: 'coolsites'
   },
-}
+  {
+    id: 120938102983,
+    name: 'sweetsites'
+  }
+]
+
+app.locals.url = [
+  {
+    id: 123213,
+    folderId: 1,
+    url: 'http://wwww.hahah.com',
+    shortenedURL: 'short.ty/123213',
+    counter: 1,
+    dateAdded: Date.now()
+  }
+]
 
 app.use('/', express.static(__dirname + '/public'))
 
@@ -30,11 +45,15 @@ app.get('/folders', (request, response) => {
 app.post('/folders', (request, response) => {
   const id = Date.now()
   const folder = request.body.foldername
-  if(app.locals.folders[folder]){
+  if(app.locals.folders[id]){
     response.send('Duplicate folder, please rename the folder and then take a lap.')
   } else {
-    app.locals.folders[folder] = {}
-    response.json( app.locals.folders[folder] )
+    app.locals.folders.push({
+      id: id,
+      name: folder
+    })
+    console.log('folders', app.locals.folders)
+    response.json(app.locals.folders)
   }
 })
 
