@@ -31,13 +31,13 @@ app.get('/folders/:folder_name', (request, response) => {
 app.post('/folders', (request, response) => {
   const id = Date.now()
   const folder = request.body.foldername
-  // if(app.locals.folders[folder_name]){
-  //   response.sendStatus('Duplicate folder')
-  // }
-
-  app.locals.folders[folder] = {}
-  console.log(request.body.foldername);
-  response.json( app.locals.folders[folder] )
+  if(app.locals.folders[folder]){
+    response.send('Duplicate folder, please rename the folder and then take a lap.')
+  } else {
+    app.locals.folders[folder] = {}
+    console.log(request.body.foldername);
+    response.json( app.locals.folders[folder] )
+  }
 })
 
 app.listen(app.get('port'), () => {
