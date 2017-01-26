@@ -69,7 +69,13 @@ app.get('/folders/:folder_id', (request, response) => {
 })
 
 app.get('/urls', (request, response) => {
-  response.json(app.locals.urls)
+  database('urls').select()
+    .then(function(urls){
+      response.status(200).json(urls)
+    })
+    .catch(function(error) {
+      console.log('Nah')
+    })
 })
 
 app.post('/urls', (request, response) => {
