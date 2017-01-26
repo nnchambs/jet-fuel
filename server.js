@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const md5 = require('md5');
 const path = require('path');
 const shortid = require('shortid');
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,7 +44,13 @@ app.use('/', express.static(__dirname + '/public'))
 // })
 
 app.get('/folders', (request, response) => {
-  response.send(app.locals.folders)
+  database('folders').select()
+    .then(function(folders){
+      response.status(200).json(folders)
+    })
+    .catch(function(error) {
+      console.log('Nah')
+    })
 })
 
 app.post('/folders', (request, response) => {
