@@ -10,7 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.Port || 3000)
 app.locals.title = 'Shor.ty'
 app.locals.folders = {
-  andrew: 'I am a banana'
+  andrew: 'I am a banana',
+  coolsites: {
+    booyah: 'hahahah'
+  },
 }
 
 app.use('/', express.static(__dirname + '/public'))
@@ -24,10 +27,6 @@ app.get('/folders', (request, response) => {
   response.send(app.locals.folders)
 })
 
-app.get('/folders/:folder_name', (request, response) => {
-  response.json(app.locals.folders)
-})
-
 app.post('/folders', (request, response) => {
   const id = Date.now()
   const folder = request.body.foldername
@@ -35,9 +34,14 @@ app.post('/folders', (request, response) => {
     response.send('Duplicate folder, please rename the folder and then take a lap.')
   } else {
     app.locals.folders[folder] = {}
-    console.log(request.body.foldername);
     response.json( app.locals.folders[folder] )
   }
+})
+
+app.get('/folders/:folder_name', (request, response) => {
+  const { folderName } = request.params
+  console.log(app.locals.folders[folderName])
+  response.json(app.locals.folders[folderName])
 })
 
 app.listen(app.get('port'), () => {
