@@ -19,7 +19,7 @@ app.locals.title = 'Shor.ty'
 app.use('/', express.static(__dirname + '/public'))
 
 app.get('/', (request, response) => {
-  response.sendFile('./public/index.html')
+  response.sendFile('public/index.html')
 })
 
 app.get('/folders', (request, response) => {
