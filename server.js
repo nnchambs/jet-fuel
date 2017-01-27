@@ -17,6 +17,10 @@ app.set('port', process.env.PORT || 3000)
 app.locals.title = 'Shor.ty'
 app.use('/', express.static(__dirname + '/public'))
 
+app.get('/', (request, response) => {
+  response.send('index')
+})
+
 app.get('/folders', (request, response) => {
   helpers.getFolders(response)
 })
