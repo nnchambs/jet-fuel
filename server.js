@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3000)
 app.locals.title = 'Shor.ty'
 
-app.use('/', express.static(__dirname, 'public'))
+app.use('/', express.static(__dirname, '/public'))
 
 // app.get('/', (request, response) => {
 //   response.sendFile(path.join(__dirname, '/public', '/index.html'))
