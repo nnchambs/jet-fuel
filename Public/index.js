@@ -47,9 +47,45 @@ function getFolders() {
   $.get('/folders', function(folders){
     folders.forEach(function(folder){
       $('.folder-list').append(
-        `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
+        `<button onClick='getPop(${folder.id})'>Most Popular Links</button>
+        <button onClick='getNewest(${folder.id})'>Newest Link</button>
+        <div class="folder" id=${folder.id}>- ${folder.name}</div>`
       )
       populateDropdown(folder)
+    })
+  })
+}
+
+function getPop(id) {
+  $.get(`/urls/${id}/desc/counter`, function(urls){
+    $(`#${id}.folder`).empty()
+    urls.forEach(function(url) {
+      $(`#${url.folder_id}.folder`).append(`
+        <li>
+          <div>
+            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
+            <p>Created at: ${url.created_at}</p>
+            <p>Clicks: ${url.counter}</p>
+          </div>
+        </li>
+      `)
+    })
+  })
+}
+
+function getNewest(id) {
+  $.get(`/urls/${id}/desc/created_at`, function(urls){
+    $(`#${id}.folder`).empty()
+    urls.forEach(function(url) {
+      $(`#${url.folder_id}.folder`).append(`
+        <li>
+          <div>
+            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
+            <p>Created at: ${url.created_at}</p>
+            <p>Clicks: ${url.counter}</p>
+          </div>
+        </li>
+      `)
     })
   })
 }
@@ -62,6 +98,7 @@ function getURLS() {
           <div>
             <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
             <p>Created at: ${url.created_at}</p>
+            <p>Clicks: ${url.counter}</p>
           </div>
         </li>
       `)
