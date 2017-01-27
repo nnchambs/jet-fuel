@@ -1,3 +1,8 @@
+$(document).ready(function(){
+  getFolders()
+  getURLS()
+});
+
 var folderSubmit = $('.folder-submit').val()
 var folderInput = $('.folder-input').val()
 
@@ -16,10 +21,11 @@ $('.folder-submit').click(function(e) {
       $('.folder-list').empty()
       response.forEach(function(folder){
         $('.folder-list').append(
-          `<div class="${folder.id}">- ${folder.name}</div>`
+          `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
         )
-        populateDropdown(folder)
       })
+      populateDropdown(folder)
+      getURLS()
     })
 })
 
@@ -39,17 +45,18 @@ $('.url-submit').click(function(e) {
   })
 })
 
-$.get('/folders', function(folders){
-  folders.forEach(function(folder){
-    $('.folder-list').append(
-      `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
-    )
-    populateDropdown(folder)
-    getURLS()
+function getFolders() {
+  $.get('/folders', function(folders){
+    folders.forEach(function(folder){
+      $('.folder-list').append(
+        `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
+      )
+      populateDropdown(folder)
+    })
   })
-})
+}
 
-getURLS = () => {
+function getURLS() {
   $.get('/urls', function(urls) {
     urls.forEach(function(url) {
       console.log(url.folder_id);
@@ -64,7 +71,6 @@ getURLS = () => {
     })
   })
 }
-
 
 populateDropdown = (folder) => {
   $('.folder-select').append(`
