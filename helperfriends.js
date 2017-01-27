@@ -37,13 +37,48 @@ module.exports.getUrls = function(response) {
 
 module.exports.postNewUrl = function(url, shortened_url, folder_id, id, response){
   database('urls').insert({url: url, shortened_url: shortened_url, folder_id: folder_id, counter: 0,  created_at: new Date})
- .then(function() {
-   database('urls').select()
-     .then(function(url) {
+   .then(function() {
+     database('urls').select()
+       .then(function(url) {
+         response.status(200).json(url)
+       })
+       .catch(function(error) {
+         console.error('Nah')
+       });
+   })
+}
+
+module.exports.sortUrls = function(folder_id, sort_param, sort_by, response) {
+  database('urls').select().where('folder_id', folder_id).orderBy(sort_param, sort_by)
+    .then(function(urls){
+      response.status(200).json(urls)
+    })
+    .catch(function(error) {
+      console.error('Nah')
+    })
+}
+
+module.exports.increaseCounter = function(id, counter, response) {
+  database('urls').where('id', id).first()
+  .update({ counter: counter })
+  .returning([ 'id', 'folder_id', 'shortened_url', 'url', 'counter'])
+  .then(function() {
+    database('urls').select()
+      .then(function(url) {
        response.status(200).json(url)
-     })
+      })
      .catch(function(error) {
        console.error('Nah')
      });
- })
+  })
+}
+
+module.exports.getUrlsById = function(id, response) {
+  database('folders').select().table('urls').where('id', id)
+    .then(function(urls) {
+      response.status(200).json(urls);
+    })
+    .catch(function(error) {
+      console.error(error)
+    })
 }
