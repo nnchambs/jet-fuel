@@ -5,3 +5,21 @@ a {
 a:hover {
   cursor: pointer;
 }
+
+.inline {
+  display: inline-block;
+}
+
+.folder-container {
+  display: inline-block;
+}
+
+.urls {
+  margin-left: 15px;
+}
+
+.folder-name {
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
