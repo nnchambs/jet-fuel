@@ -41,6 +41,7 @@ $('.url-submit').click(function(e) {
       created_at: new Date
     }
   })
+  getURLS()
 })
 
 function getFolders() {
