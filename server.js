@@ -8,6 +8,7 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const knex = require('knex')(configuration);
+const helpers = require('./helperfriends.js')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,49 +17,17 @@ app.set('port', process.env.Port || 3000)
 app.locals.title = 'Shor.ty'
 app.use('/', express.static(__dirname + '/public'))
 
-// app.get('/', (request, response) => {
-//   response.sendFile(path.join(__dirname + '/index.html'));
-//   // response.send("hello world")
-// })
-
 app.get('/folders', (request, response) => {
-  database('folders').select()
-    .then(function(folders){
-      response.status(200).json(folders)
-    })
-    .catch(function(error) {
-      console.log('Nah')
-    })
+  helpers.getFolders(response)
 })
 
 app.post('/folders', (request, response) => {
-  const id = md5('folder_id')
   const folder = request.body.foldername
-  database('folders').insert({name: folder})
-  .then(function() {
-    database('folders').select()
-      .then(function(folders) {
-        response.status(200).json(folders)
-      })
-      .catch(function(error) {
-        console.error('Nah')
-      });
-  })
-})
-
-app.get('/folders/:folder_id', (request, response) => {
-  const { id } = request.params.folder_id
-  response.json(requestedFolder)
+  helpers.postNewFolder(folder, response);
 })
 
 app.get('/urls', (request, response) => {
-  database('urls').select()
-    .then(function(urls){
-      response.status(200).json(urls)
-    })
-    .catch(function(error) {
-      console.log('Nah')
-    })
+  helpers.getUrls(response)
 })
 
 app.get('/urls/:id', (request, response) => {
