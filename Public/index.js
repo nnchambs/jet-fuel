@@ -11,8 +11,6 @@ $('.folder-submit').click(function(e) {
     data: {
       foldername: folder
     }
-<<<<<<< HEAD
-=======
   })
     .then(function(response) {
       $('.folder-list').empty()
@@ -38,7 +36,6 @@ $('.url-submit').click(function(e) {
       folder_id: folder_id,
       created_at: new Date
     }
->>>>>>> master
   })
 })
 
