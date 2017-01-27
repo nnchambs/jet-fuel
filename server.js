@@ -34,7 +34,6 @@ app.get('/folders', (request, response) => {
 app.post('/folders', (request, response) => {
   const id = md5('folder_id')
   const folder = request.body.foldername
-  console.log(request.body.foldername);
   database('folders').insert({name: folder})
   .then(function() {
     database('folders').select()
@@ -65,9 +64,9 @@ app.get('/urls', (request, response) => {
 app.post('/urls', (request, response) => {
   const url = request.body.url
   const shortened_url = shortid.generate()
-  const folder_id = 3
+  const folder_id = request.body.folder_id
   const id = md5('url_id')
-  database('urls').insert({url: url, shortened_url: shortened_url, folder_id: 3, created_at: new Date})
+  database('urls').insert({url: url, shortened_url: shortened_url, folder_id: folder_id, created_at: new Date})
  .then(function() {
    database('urls').select()
      .then(function(url) {

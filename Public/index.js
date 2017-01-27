@@ -23,6 +23,22 @@ $('.folder-submit').click(function(e) {
     })
 })
 
+$('.url-submit').click(function(e) {
+  e.preventDefault()
+  var url = $('.url-input').val()
+  var folder_id = $('option:selected').attr('id')
+  console.log(folder_id);
+  $.ajax({
+    type: "POST",
+    url: '/urls',
+    data: {
+      url: url,
+      folder_id: folder_id,
+      created_at: new Date
+    }
+  })
+})
+
 $.get('/folders', function(folders){
   folders.forEach(function(folder){
     $('.folder-list').append(
