@@ -54,13 +54,18 @@ app.get('/folders', (request, response) => {
 })
 
 app.post('/folders', (request, response) => {
-  const id = md5('folderID')
+  const id = md5('folder_id')
   const folder = request.body.foldername
-    app.locals.folders.push({
-      id: id,
-      name: folder
-    })
-    response.json(app.locals.folders)
+   database('folders').insert({name: folder})
+  .then(function() {
+    database('folders').select()
+      .then(function(folders) {
+        response.status(200).json(folders)
+      })
+      .catch(function(error) {
+        console.error('Nah')
+      });
+  })
 })
 
 app.get('/folders/:folder_id', (request, response) => {
@@ -85,7 +90,7 @@ app.post('/urls', (request, response) => {
     folderId: 1,
     url: url,
     dateAdded: Date.now(),
-    shortenedURL: `shor.ty/${shortid.generate()}`
+    shortenedURL: shortid.generate()
   })
   response.json(app.locals.urls)
 })
