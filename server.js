@@ -34,7 +34,8 @@ app.get('/folders', (request, response) => {
 app.post('/folders', (request, response) => {
   const id = md5('folder_id')
   const folder = request.body.foldername
-   database('folders').insert({name: folder})
+  console.log(request.body.foldername);
+  database('folders').insert({name: folder})
   .then(function() {
     database('folders').select()
       .then(function(folders) {

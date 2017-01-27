@@ -8,8 +8,18 @@ $('.folder-submit').click(function(e) {
   $.ajax({
     type: "POST",
     url: '/folders',
-    data: folder
+    data: {
+      foldername: folder
+    }
   })
+    .then(function(response) {
+      $('.folder-list').empty()
+      response.forEach(function(folder){
+        $('.folder-list').append(
+          `<div class="${folder.id}">- ${folder.name}</div>`
+        )
+      })
+    })
 })
 
 $.get('/folders', function(folders){
