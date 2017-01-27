@@ -6,10 +6,10 @@ module.exports = {
     client: 'pg',
     connection: 'postgres://localhost/shorty',
     migrations: {
-      directory: 'db/migrations'
+      directory: './db/migrations'
     },
     seeds: {
-      directory: 'db/seeds/dev'
+      directory: './db/seeds/dev'
     },
     useNullAsDefault: true
   },
@@ -17,10 +17,10 @@ module.exports = {
     client: 'pg',
     connection:'postgres://localhost/shorty_test',
     migrations: {
-      directory: '/db/migrations'
+      directory: './db/migrations'
     },
     seeds: {
-      directory: 'db/seeds/test'
+      directory: './db/seeds/test'
     },
     useNullAsDefault: true
   },
@@ -29,11 +29,11 @@ module.exports = {
     connection:
     process.env.DATABASE_URL,
     migrations: {
-      directory: 'db/migrations'
+      directory: './db/migrations'
     }
   },
   seeds: {
-    directory: 'db/seeds/production'
+    directory: './db/seeds/production'
   },
   useNullAsDefault: true
 };
