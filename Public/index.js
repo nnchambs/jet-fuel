@@ -18,6 +18,7 @@ $('.folder-submit').click(function(e) {
         $('.folder-list').append(
           `<div class="${folder.id}">- ${folder.name}</div>`
         )
+        populateDropdown(folder)
       })
     })
 })
@@ -27,8 +28,15 @@ $.get('/folders', function(folders){
     $('.folder-list').append(
       `<div class="${folder.id}">- ${folder.name}</div>`
     )
+    populateDropdown(folder)
   })
 })
+
+populateDropdown = (folder) => {
+  $('.folder-select').append(`
+    <option id=${folder.id}>${folder.name}</option>
+    `)
+}
 
 $.get('/urls', function(urls){
 
