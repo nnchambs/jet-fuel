@@ -8,7 +8,9 @@ $('.folder-submit').click(function(e) {
   $.ajax({
     type: "POST",
     url: '/folders',
-    data: folder
+    data: {
+      foldername: folder
+    }
   })
 })
 
