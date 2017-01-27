@@ -41,10 +41,11 @@ app.get('/urls/:id', (request, response) => {
           })
 })
 
-app.get('/urls/:id/:sortby', (request, response) => {
+app.get('/urls/:id/:sortby/:sortparam', (request, response) => {
   const folder_id = request.params.id
   const sort_by = request.params.sortby
-  database('urls').select().where('folder_id', folder_id).orderBy('counter', sort_by)
+  const sort_param = request.params.sortparam
+  database('urls').select().where('folder_id', folder_id).orderBy(sort_param, sort_by)
     .then(function(urls){
       response.status(200).json(urls)
     })
