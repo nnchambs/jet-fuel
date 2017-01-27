@@ -29,7 +29,7 @@ module.exports = {
     connection:
     process.env.DATABASE_URL,
     migrations: {
-      tableName: './db/migrations'
+      directory: '.db/migrations'
     }
   },
   seeds: {
