@@ -56,7 +56,7 @@ getURLS = () => {
       $(`#${url.folder_id}.folder`).append(`
         <li>
           <div>
-            <a id=${url.id} >${url.shortened_url}</a>
+            <a id=${url.id} href='${url.url}' >${url.shortened_url}</a>
             <p>Created at: ${url.created_at}</p>
           </div>
         </li>
