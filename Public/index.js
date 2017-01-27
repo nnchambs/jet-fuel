@@ -42,21 +42,32 @@ $('.url-submit').click(function(e) {
 $.get('/folders', function(folders){
   folders.forEach(function(folder){
     $('.folder-list').append(
-      `<div class="${folder.id}">- ${folder.name}</div>`
+      `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
     )
     populateDropdown(folder)
+    getURLS()
   })
 })
+
+getURLS = () => {
+  $.get('/urls', function(urls) {
+    urls.forEach(function(url) {
+      console.log(url.folder_id);
+      $(`#${url.folder_id}.folder`).append(`
+        <li>
+          <div>
+            <a id=${url.id} >${url.shortened_url}</a>
+            <p>Created at: ${url.created_at}</p>
+          </div>
+        </li>
+      `)
+    })
+  })
+}
+
 
 populateDropdown = (folder) => {
   $('.folder-select').append(`
     <option id=${folder.id}>${folder.name}</option>
     `)
 }
-
-$.get('/urls', function(urls){
-
-  // urls.forEach(function(url){
-  //   if()
-  // })
-})
