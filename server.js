@@ -14,28 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('port', process.env.Port || 3000)
 app.locals.title = 'Shor.ty'
-app.locals.folders = [
-  {
-    id: 120938102983,
-    name: 'coolsites'
-  },
-  {
-    id: 444444444444,
-    name: 'sweetsites'
-  }
-]
-
-app.locals.urls = [
-  {
-    id: 120938102983,
-    folderId: 1,
-    url: 'http://wwww.hahah.com',
-    shortenedURL: 'short.ty/123213',
-    counter: 1,
-    dateAdded: Date.now()
-  }
-]
-
 app.use('/', express.static(__dirname + '/public'))
 
 // app.get('/', (request, response) => {
