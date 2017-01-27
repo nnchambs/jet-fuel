@@ -9,6 +9,7 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const knex = require('knex')(configuration);
 const helpers = require('./helperfriends.js')
+const fs = require('fs')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,7 +19,7 @@ app.locals.title = 'Shor.ty'
 app.use('/', express.static(__dirname + '/public'))
 
 app.get('/', (request, response) => {
-  response.send('index')
+  response.sendFile('index')
 })
 
 app.get('/folders', (request, response) => {
