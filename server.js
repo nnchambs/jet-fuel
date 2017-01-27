@@ -32,26 +32,14 @@ app.get('/urls', (request, response) => {
 
 app.get('/urls/:id', (request, response) => {
   const { id } = request.params
-  database('folders').select().table('urls').where('id', id)
-          .then(function(urls) {
-            response.status(200).json(urls);
-          })
-          .catch(function(error) {
-            console.error(error)
-          })
+  helpers.getUrlsById(id, response)
 })
 
 app.get('/urls/:id/:sortby/:sortparam', (request, response) => {
   const folder_id = request.params.id
   const sort_by = request.params.sortby
   const sort_param = request.params.sortparam
-  database('urls').select().where('folder_id', folder_id).orderBy(sort_param, sort_by)
-    .then(function(urls){
-      response.status(200).json(urls)
-    })
-    .catch(function(error) {
-      console.error('Nah')
-    })
+  helpers.sortUrls(folder_id, sort_param, sort_by, response)
 })
 
 app.post('/urls', (request, response) => {
@@ -59,34 +47,13 @@ app.post('/urls', (request, response) => {
   const shortened_url = shortid.generate()
   const folder_id = request.body.folder_id
   const id = md5('url_id')
-  database('urls').insert({url: url, shortened_url: shortened_url, folder_id: folder_id, counter: 0,  created_at: new Date})
- .then(function() {
-   database('urls').select()
-     .then(function(url) {
-       response.status(200).json(url)
-     })
-     .catch(function(error) {
-       console.error('Nah')
-     });
- })
+  helpers.postNewUrl(url, shortened_url, folder_id, id, response)
 })
 
 app.patch('/urls/:id', (request, response) => {
   const { id } = request.params
   const { counter, folder_id, shortened_url, url } = request.body
-
-  database('urls').where('id', id).first()
-  .update({ counter: counter })
-  .returning([ 'id', 'folder_id', 'shortened_url', 'url', 'counter'])
-  .then(function() {
-    database('urls').select()
-      .then(function(url) {
-       response.status(200).json(url)
-      })
-     .catch(function(error) {
-       console.error('Nah')
-     });
-  })
+  helpers.increaseCounter(id, counter, response)
 })
 
 app.listen(app.get('port'), () => {
