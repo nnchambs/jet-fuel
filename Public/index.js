@@ -9,7 +9,6 @@ var folderInput = $('.folder-input').val()
 $('.folder-submit').click(function(e) {
   e.preventDefault()
   var folder = $('.folder-input').val()
-  console.log( folder );
   $.ajax({
     type: "POST",
     url: '/folders',
@@ -33,7 +32,6 @@ $('.url-submit').click(function(e) {
   e.preventDefault()
   var url = $('.url-input').val()
   var folder_id = $('option:selected').attr('id')
-  console.log(folder_id);
   $.ajax({
     type: "POST",
     url: '/urls',
@@ -59,16 +57,31 @@ function getFolders() {
 function getURLS() {
   $.get('/urls', function(urls) {
     urls.forEach(function(url) {
-      console.log(url.folder_id);
       $(`#${url.folder_id}.folder`).append(`
         <li>
           <div>
-            <a id=${url.id} href='${url.url}' >${url.shortened_url}</a>
+            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
             <p>Created at: ${url.created_at}</p>
           </div>
         </li>
       `)
     })
+  })
+}
+
+function counter(id) {
+  $.get(`/urls/${id}`, function(data) {
+    console.log(data[0]);
+    const powerUp = data[0].counter + 1
+
+    $.ajax({
+      url: `/urls/${data[0].id}`,
+      type: 'patch',
+      data: {
+        counter: powerUp
+      }
+    })
+    window.location.href = `${data[0].url}`
   })
 }
 

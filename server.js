@@ -61,12 +61,23 @@ app.get('/urls', (request, response) => {
     })
 })
 
+app.get('/urls/:id', (request, response) => {
+  const { id } = request.params
+  database('folders').select().table('urls').where('id', id)
+          .then(function(urls) {
+            response.status(200).json(urls);
+          })
+          .catch(function(error) {
+            console.error(error)
+          })
+})
+
 app.post('/urls', (request, response) => {
   const url = request.body.url
   const shortened_url = shortid.generate()
   const folder_id = request.body.folder_id
   const id = md5('url_id')
-  database('urls').insert({url: url, shortened_url: shortened_url, folder_id: folder_id, created_at: new Date})
+  database('urls').insert({url: url, shortened_url: shortened_url, folder_id: folder_id, counter: 0,  created_at: new Date})
  .then(function() {
    database('urls').select()
      .then(function(url) {
@@ -78,11 +89,21 @@ app.post('/urls', (request, response) => {
  })
 })
 
-app.put('/urls', (request, response) => {
-  const id = 820922
-  knex('urls').where('id', '=', id).increment('counter', '+', 1)
-  .then(function(url) {
-    response.status(200).json(url)
+app.patch('/urls/:id', (request, response) => {
+  const { id } = request.params
+  const { counter, folder_id, shortened_url, url } = request.body
+
+  database('urls').where('id', id).first()
+  .update({ counter: counter })
+  .returning([ 'id', 'folder_id', 'shortened_url', 'url', 'counter'])
+  .then(function() {
+    database('urls').select()
+      .then(function(url) {
+       response.status(200).json(url)
+      })
+     .catch(function(error) {
+       console.error('Nah')
+     });
   })
 })
 
