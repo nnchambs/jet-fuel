@@ -44,8 +44,10 @@ app.get('/folders', (request, response) => {
 })
 
 app.post('/folders', (request, response) => {
-  const id = md5('folderID')
-  const folder = request.body.foldername
+  const folder = request.body.name
+
+  const id = md5(folder)
+  console.log(request.body.name);
     app.locals.folders.push({
       id: id,
       name: folder
