@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
     }),
 
     knex.schema.createTable('urls', function(table) {
-      table.string('id').primary();
+      table.increments('id').primary();
       table.string('url');
       table.string('shortened_url');
       table.integer('folder_id')

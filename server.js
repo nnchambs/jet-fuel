@@ -85,14 +85,19 @@ app.get('/urls', (request, response) => {
 
 app.post('/urls', (request, response) => {
   const url = request.body.url
-  app.locals.urls.push({
-    id: md5('url'),
-    folderId: 1,
-    url: url,
-    dateAdded: Date.now(),
-    shortenedURL: shortid.generate()
-  })
-  response.json(app.locals.urls)
+  const shortened_url = shortid.generate()
+  const folder_id = 3
+  const id = md5('url_id')
+  database('urls').insert({url: url, shortened_url: shortened_url, folder_id: 3, created_at: new Date})
+ .then(function() {
+   database('urls').select()
+     .then(function(url) {
+       response.status(200).json(url)
+     })
+     .catch(function(error) {
+       console.error('Nah')
+     });
+ })
 })
 
 app.listen(app.get('port'), () => {
