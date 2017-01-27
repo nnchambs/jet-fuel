@@ -7,6 +7,7 @@ exports.seed = function(knex, Promise) {
         url: "http://www.espn.com",
         shortened_url: "shor.ty/389dl",
         folder_id: 2,
+        counter: 0,
         created_at: new Date
       }),
       knex('urls').insert({
@@ -14,6 +15,7 @@ exports.seed = function(knex, Promise) {
         url: "http://www.google.com",
         shortened_url: "shor.ty/3847e",
         folder_id: 1,
+        counter: 0,
         created_at: new Date
       }),
       knex('urls').insert({
@@ -21,6 +23,7 @@ exports.seed = function(knex, Promise) {
         url: "http://www.redsox.com",
         shortened_url: "shor.ty/104ie",
         folder_id: 3,
+        counter: 0,
         created_at: new Date
       })
     ]);

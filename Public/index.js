@@ -45,25 +45,22 @@ $.get('/folders', function(folders){
       `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
     )
     populateDropdown(folder)
-    getURLS()
   })
 })
 
-getURLS = () => {
-  $.get('/urls', function(urls) {
-    urls.forEach(function(url) {
-      console.log(url.folder_id);
-      $(`#${url.folder_id}.folder`).append(`
-        <li>
-          <div>
-            <a id=${url.id} href='${url.url}' >${url.shortened_url}</a>
-            <p>Created at: ${url.created_at}</p>
-          </div>
-        </li>
-      `)
-    })
+$.get('/urls', function(urls) {
+  urls.forEach(function(url) {
+    console.log(url.folder_id);
+    $(`#${url.folder_id}.folder`).append(`
+      <li>
+        <div>
+          <a id=${url.id} href='${url.url}' >${url.shortened_url}</a>
+          <p>Created at: ${url.created_at}</p>
+        </div>
+      </li>
+    `)
   })
-}
+})
 
 
 populateDropdown = (folder) => {

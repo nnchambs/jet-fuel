@@ -7,7 +7,7 @@ const shortid = require('shortid');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
-
+const knex = require('knex')(configuration);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -76,6 +76,14 @@ app.post('/urls', (request, response) => {
        console.error('Nah')
      });
  })
+})
+
+app.put('/urls', (request, response) => {
+  const id = 820922
+  knex('urls').where('id', '=', id).increment('counter', '+', 1)
+  .then(function(url) {
+    response.status(200).json(url)
+  })
 })
 
 app.listen(app.get('port'), () => {
