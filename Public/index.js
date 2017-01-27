@@ -1,3 +1,8 @@
+$(document).ready(function(){
+  getFolders()
+  getURLS()
+});
+
 var folderSubmit = $('.folder-submit').val()
 var folderInput = $('.folder-input').val()
 
@@ -16,10 +21,11 @@ $('.folder-submit').click(function(e) {
       $('.folder-list').empty()
       response.forEach(function(folder){
         $('.folder-list').append(
-          `<div class="${folder.id}">- ${folder.name}</div>`
+          `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
         )
         populateDropdown(folder)
       })
+      getURLS()
     })
 })
 
@@ -39,29 +45,32 @@ $('.url-submit').click(function(e) {
   })
 })
 
-$.get('/folders', function(folders){
-  folders.forEach(function(folder){
-    $('.folder-list').append(
-      `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
-    )
-    populateDropdown(folder)
+function getFolders() {
+  $.get('/folders', function(folders){
+    folders.forEach(function(folder){
+      $('.folder-list').append(
+        `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
+      )
+      populateDropdown(folder)
+    })
   })
-})
+}
 
-$.get('/urls', function(urls) {
-  urls.forEach(function(url) {
-    console.log(url.folder_id);
-    $(`#${url.folder_id}.folder`).append(`
-      <li>
-        <div>
-          <a id=${url.id} href='${url.url}' >${url.shortened_url}</a>
-          <p>Created at: ${url.created_at}</p>
-        </div>
-      </li>
-    `)
+function getURLS() {
+  $.get('/urls', function(urls) {
+    urls.forEach(function(url) {
+      console.log(url.folder_id);
+      $(`#${url.folder_id}.folder`).append(`
+        <li>
+          <div>
+            <a id=${url.id} href='${url.url}' >${url.shortened_url}</a>
+            <p>Created at: ${url.created_at}</p>
+          </div>
+        </li>
+      `)
+    })
   })
-})
-
+}
 
 populateDropdown = (folder) => {
   $('.folder-select').append(`
