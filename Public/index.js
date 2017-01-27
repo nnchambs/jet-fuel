@@ -3,20 +3,26 @@ var folderInput = $('.folder-input').val()
 
 $('.folder-submit').click(function(e) {
   e.preventDefault()
-  var data = $('.folder-input').val()
-  console.log(folderInput);
+  var folder = $('.folder-input').val()
+  console.log( folder );
   $.ajax({
     type: "POST",
-    url: 'http://localhost:3000/folders',
-    data: data,
+    url: '/folders',
+    data: folder
   })
 })
 
-$.get('/folders', function(data){
-  var folderList = $('.folder-list')
-  data.forEach(function(e){
+$.get('/folders', function(folders){
+  folders.forEach(function(folder){
     $('.folder-list').append(
-      `<div class="${e.id}">${e.name}</div>`
+      `<div class="${folder.id}">- ${folder.name}</div>`
     )
   })
+})
+
+$.get('/urls', function(urls){
+
+  // urls.forEach(function(url){
+  //   if()
+  // })
 })
