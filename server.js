@@ -13,7 +13,7 @@ const helpers = require('./helperfriends.js')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('port', process.env.Port || 3000)
+app.set('port', process.env.PORT || 3000)
 app.locals.title = 'Shor.ty'
 app.use('/', express.static(__dirname + '/public'))
 
