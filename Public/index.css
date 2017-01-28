@@ -21,6 +21,22 @@ img {
 
 input {
   border-radius: 5px;
+  height: 100%;
+  text-align: center;
+}
+
+.input {
+  margin: 0 5px 0 5px;
+}
+
+.url-input {
+  width: 300px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .folder-name {
@@ -42,8 +58,20 @@ button, .submit {
 }
 
 .folder-container {
-  display: inline-block;
+  width: 480px;
   margin: 0 0 15px 0;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.folder-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.folder-sort {
+  margin: 0 10px 0 10px;
+
 }
 
 .folder-list {
@@ -61,7 +89,12 @@ tr {
   height: 50px;
 }
 
+td {
+  padding: 0 10px 0 0;
+}
+
 .folder-name {
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 400;
+  margin: 0 50px 10px 0;
 }

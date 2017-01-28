@@ -47,9 +47,13 @@ function getFolders() {
     folders.forEach(function(folder){
       $('.folder-list').append(
         `<div class="folder-container">
-        <div class="folder-name inline" >- ${folder.name}</div>
-        <button class="inline" onClick='getPop(${folder.id})'>Most Popular Links</button>
-        <button class="inline" onClick='getNewest(${folder.id})'>Newest Link</button>
+        <div class="folder-name-container">
+        <div class="folder-name inline" >${folder.name}</div>
+        </div>
+        <div class="folder-buttons">
+        <button class="inline folder-sort" onClick='getPop(${folder.id})'>Most Popular Links</button>
+        <button class="inline folder-sort" onClick='getNewest(${folder.id})'>Newest Link</button>
+        </div>
         </div>
         <div class="folder" id=${folder.id}></div>
         <br/>
