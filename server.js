@@ -9,13 +9,19 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const knex = require('knex')(configuration);
 const helpers = require('./helperfriends.js')
+const fs = require('fs')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('port', process.env.PORT || 3000)
 app.locals.title = 'Shor.ty'
-app.use('/', express.static(path.join(__dirname + '/public')))
+
+app.use(express.static(path.join(__dirname, '/public')))
+
+app.get('/', (request, response) => {
+  res.sendfile(__dirname + '/public/index.html')
+})
 
 app.get('/folders', (request, response) => {
   helpers.getFolders(response)
