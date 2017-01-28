@@ -18,12 +18,8 @@ $('.folder-submit').click(function(e) {
   })
     .then(function(response) {
       $('.folder-list').empty()
-      response.forEach(function(folder){
-        $('.folder-list').append(
-          `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
-        )
-        populateDropdown(folder)
-      })
+      getFolders()
+      populateDropdown(folder)
       getURLS()
     })
 })
