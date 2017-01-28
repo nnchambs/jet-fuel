@@ -18,12 +18,8 @@ $('.folder-submit').click(function(e) {
   })
     .then(function(response) {
       $('.folder-list').empty()
-      response.forEach(function(folder){
-        $('.folder-list').append(
-          `<div class="folder" id=${folder.id}>- ${folder.name}</div>`
-        )
-        populateDropdown(folder)
-      })
+      getFolders()
+      populateDropdown(folder)
       getURLS()
     })
 })
@@ -32,6 +28,7 @@ $('.url-submit').click(function(e) {
   e.preventDefault()
   var url = $('.url-input').val()
   var folder_id = $('option:selected').attr('id')
+  console.log(folder_id);
   $.ajax({
     type: "POST",
     url: '/urls',
@@ -41,7 +38,9 @@ $('.url-submit').click(function(e) {
       created_at: new Date
     }
   })
-  getURLS()
+  .then($('.folder').empty(), function(){
+    getURLS()
+  })
 })
 
 function getFolders() {
@@ -49,9 +48,13 @@ function getFolders() {
     folders.forEach(function(folder){
       $('.folder-list').append(
         `<div class="folder-container">
-        <div class="folder-name inline" >- ${folder.name}</div>
-        <button class="inline" onClick='getPop(${folder.id})'>Most Popular Links</button>
-        <button class="inline" onClick='getNewest(${folder.id})'>Newest Link</button>
+        <div class="folder-name-container">
+        <div class="folder-name inline" >${folder.name}</div>
+        </div>
+        <div class="folder-buttons">
+        <button class="inline folder-sort" onClick='getPop(${folder.id})'>Most Popular Links</button>
+        <button class="inline folder-sort" onClick='getNewest(${folder.id})'>Newest Link</button>
+        </div>
         </div>
         <div class="folder" id=${folder.id}></div>
         <br/>
@@ -67,13 +70,11 @@ function getPop(id) {
     $(`#${id}.folder`).empty()
     urls.forEach(function(url) {
       $(`#${url.folder_id}.folder`).append(`
-        <li class="urls" style="list-style: none;">
-          <div>
-            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
-            <p>Created at: ${url.created_at}</p>
-            <p>Clicks: ${url.counter}</p>
-          </div>
-        </li>
+        <tr>
+          <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
+          <td>Created at: ${url.created_at}</td>
+          <td>Clicks: ${url.counter}</td>
+        </tr>
       `)
     })
   })
@@ -84,13 +85,11 @@ function getNewest(id) {
     $(`#${id}.folder`).empty()
     urls.forEach(function(url) {
       $(`#${url.folder_id}.folder`).append(`
-        <li class="urls" style="list-style: none;">
-          <div>
-            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
-            <p>Created at: ${url.created_at}</p>
-            <p>Clicks: ${url.counter}</p>
-          </div>
-        </li>
+        <tr>
+          <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
+          <td>Created at: ${url.created_at}</td>
+          <td>Clicks: ${url.counter}</td>
+        </tr>
       `)
     })
   })
@@ -100,17 +99,18 @@ function getURLS() {
   $.get('/urls', function(urls) {
     urls.forEach(function(url) {
       $(`#${url.folder_id}.folder`).append(`
-        <li class="urls" style="list-style: none;">
-          <div>
-            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
-            <p>Created at: ${url.created_at}</p>
-            <p>Clicks: ${url.counter}</p>
-          </div>
-        </li>
+          <tr>
+            <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
+            <td>Created at: ${url.created_at}</td>
+            <td>Clicks: ${url.counter}</td>
+            <td><button onClick='deleteUrl(${url.id})'>Delete URL</button></td>
+          </tr>
       `)
     })
   })
 }
+
+
 
 function counter(id) {
   $.get(`/urls/${id}`, function(data) {
@@ -125,6 +125,20 @@ function counter(id) {
       }
     })
     window.location.href = `${data[0].url}`
+  })
+}
+
+function deleteUrl(id) {
+  $.get(`/urls/${id}`, function() {
+
+    $.ajax({
+      url: `/urls/${id}`,
+      type: 'delete'
+    })
+    .then(function(response) {
+      $('.folder').empty()
+      getURLS()
+    })
   })
 }
 
