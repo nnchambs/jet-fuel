@@ -32,6 +32,7 @@ $('.url-submit').click(function(e) {
   e.preventDefault()
   var url = $('.url-input').val()
   var folder_id = $('option:selected').attr('id')
+  console.log(folder_id);
   $.ajax({
     type: "POST",
     url: '/urls',
@@ -41,6 +42,8 @@ $('.url-submit').click(function(e) {
       created_at: new Date
     }
   })
+  $('.folder').empty()
+  getURLS()
 })
 
 function getFolders() {

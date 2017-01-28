@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('port', process.env.PORT || 3000)
 app.locals.title = 'Shor.ty'
-app.use('/', express.static(__dirname + '/public'))
+app.use('/', express.static(path.join(__dirname + '/public')))
 
 app.get('/folders', (request, response) => {
   helpers.getFolders(response)
