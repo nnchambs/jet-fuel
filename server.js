@@ -44,7 +44,7 @@ app.get('/urls/:id/:sortby/:sortparam', (request, response) => {
 
 app.post('/urls', (request, response) => {
   const url = request.body.url
-  const shortened_url = shortid.generate()
+  const shortened_url = "shor.ty/" + shortid.generate()
   const folder_id = request.body.folder_id
   const id = md5('url_id')
   helpers.postNewUrl(url, shortened_url, folder_id, id, response)
