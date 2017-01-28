@@ -59,3 +59,8 @@ app.patch('/urls/:id', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is runnning on ${app.get('port')}`)
 })
+
+app.delete('/urls/:id', (request, response) => {
+  const { id } = request.params
+  helpers.deleteUrl(id, response)
+})

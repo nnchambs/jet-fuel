@@ -103,11 +103,14 @@ function getURLS() {
             <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
             <td>Created at: ${url.created_at}</td>
             <td>Clicks: ${url.counter}</td>
+            <td><button onClick='deleteUrl(${url.id})'>Delete URL</button></td>
           </tr>
       `)
     })
   })
 }
+
+
 
 function counter(id) {
   $.get(`/urls/${id}`, function(data) {
@@ -122,6 +125,16 @@ function counter(id) {
       }
     })
     window.location.href = `${data[0].url}`
+  })
+}
+
+function deleteUrl(id) {
+  $.get(`/urls/${id}`, function() {
+
+    $.ajax({
+      url: `/urls/${id}`,
+      type: 'delete'
+    })
   })
 }
 

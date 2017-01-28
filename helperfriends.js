@@ -37,6 +37,16 @@ module.exports = {
       })
   },
 
+  deleteUrl: function (id, response) {
+    database('urls').where('id', id).first().del()
+    .then(function() {
+      database('urls').select()
+        .then(function() {
+          response.status(200).json('URL deleted')
+        })
+    })
+  },
+
   postNewUrl: function(url, shortened_url, folder_id, id, response) {
     database('urls').insert({url: url, shortened_url: shortened_url, folder_id: folder_id, counter: 0,  created_at: new Date})
      .then(function() {
