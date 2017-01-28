@@ -38,8 +38,9 @@ $('.url-submit').click(function(e) {
       created_at: new Date
     }
   })
-  $('.folder').empty()
-  getURLS()
+  .then($('.folder').empty(), function(){
+    getURLS()
+  })
 })
 
 function getFolders() {
