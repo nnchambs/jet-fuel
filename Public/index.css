@@ -4,7 +4,7 @@ body {
   flex-direction: column;
   align-items: center;
   color: white;
-  background: linear-gradient(purple, 5%, black, 95%, purple);
+  background: linear-gradient(rgb(85, 117, 237), .2%, black, 99.8%, rgb(85, 117, 237));
 }
 
 a {
@@ -19,12 +19,38 @@ img {
   margin: 40px 0 40px 0;
 }
 
+input {
+  border-radius: 5px;
+}
+
+.folder-name {
+  color: rgb(85, 117, 237)
+}
+
+.add-folder {
+  margin: 10px 0 10px 0;
+}
+
 .inline {
   display: inline-block;
 }
 
+button, .submit {
+  background: rgb(85, 117, 237);
+  border-radius: 5px;
+  margin: 0 3px 0 3px;
+}
+
 .folder-container {
   display: inline-block;
+  margin: 0 0 15px 0;
+}
+
+.folder-list {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .urls {
@@ -34,5 +60,4 @@ img {
 .folder-name {
   font-size: 22px;
   font-weight: 400;
-  margin-bottom: 15px;
 }
