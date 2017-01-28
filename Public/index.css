@@ -4,14 +4,19 @@ body {
   flex-direction: column;
   align-items: center;
   color: white;
+  background: linear-gradient(purple, 5%, black, 95%, purple);
 }
 
 a {
-  color: blue;
+  color: purple;
 }
 
 a:hover {
   cursor: pointer;
+}
+
+img {
+  margin: 40px 0 40px 0;
 }
 
 .inline {
