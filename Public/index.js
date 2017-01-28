@@ -65,13 +65,11 @@ function getPop(id) {
     $(`#${id}.folder`).empty()
     urls.forEach(function(url) {
       $(`#${url.folder_id}.folder`).append(`
-        <li class="urls" style="list-style: none;">
-          <div>
-            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
-            <p>Created at: ${url.created_at}</p>
-            <p>Clicks: ${url.counter}</p>
-          </div>
-        </li>
+        <tr>
+          <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
+          <td>Created at: ${url.created_at}</td>
+          <td>Clicks: ${url.counter}</td>
+        </tr>
       `)
     })
   })
@@ -82,13 +80,11 @@ function getNewest(id) {
     $(`#${id}.folder`).empty()
     urls.forEach(function(url) {
       $(`#${url.folder_id}.folder`).append(`
-        <li class="urls" style="list-style: none;">
-          <div>
-            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
-            <p>Created at: ${url.created_at}</p>
-            <p>Clicks: ${url.counter}</p>
-          </div>
-        </li>
+        <tr>
+          <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
+          <td>Created at: ${url.created_at}</td>
+          <td>Clicks: ${url.counter}</td>
+        </tr>
       `)
     })
   })
@@ -98,13 +94,11 @@ function getURLS() {
   $.get('/urls', function(urls) {
     urls.forEach(function(url) {
       $(`#${url.folder_id}.folder`).append(`
-        <li class="urls" style="list-style: none;">
-          <div>
-            <a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a>
-            <p>Created at: ${url.created_at}</p>
-            <p>Clicks: ${url.counter}</p>
-          </div>
-        </li>
+          <tr>
+            <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
+            <td>Created at: ${url.created_at}</td>
+            <td>Clicks: ${url.counter}</td>
+          </tr>
       `)
     })
   })
