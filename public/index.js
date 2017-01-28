@@ -74,6 +74,7 @@ function getPop(id) {
           <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
           <td>Created at: ${url.created_at}</td>
           <td>Clicks: ${url.counter}</td>
+          <td><button onClick='deleteUrl(${url.id})'>Delete URL</button></td>
         </tr>
       `)
     })
@@ -89,6 +90,7 @@ function getNewest(id) {
           <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
           <td>Created at: ${url.created_at}</td>
           <td>Clicks: ${url.counter}</td>
+          <td><button onClick='deleteUrl(${url.id})'>Delete URL</button></td>
         </tr>
       `)
     })
