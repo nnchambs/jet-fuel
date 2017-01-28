@@ -41,8 +41,8 @@ module.exports = {
     database('urls').where('id', id).first().del()
     .then(function() {
       database('urls').select()
-        .then(function() {
-          response.status(200).json('URL deleted')
+        .then(function(url) {
+          response.status(200).json(url)
         })
     })
   },

@@ -135,6 +135,10 @@ function deleteUrl(id) {
       url: `/urls/${id}`,
       type: 'delete'
     })
+    .then(function(response) {
+      $('.folder').empty()
+      getURLS()
+    })
   })
 }
 
