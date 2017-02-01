@@ -1,18 +1,17 @@
 
 exports.up = function(knex, Promise) {
   return Promise.all([
-    knex.schema.createTableIfNotExists('folders', function(table) {
+    knex.schema.createTableIfNotExists('polls', function(table) {
       table.increments('id').primary();
       table.string('name');
     }),
 
-    knex.schema.createTableIfNotExists('urls', function(table) {
+    knex.schema.createTableIfNotExists('options', function(table) {
       table.increments('id').primary()
-      table.string('url')
-      table.string('shortened_url')
+      table.string('option')
       table.integer('folder_id')
         .references('id')
-        .inTable('folders')
+        .inTable('polls')
       table.integer('counter')
       table.timestamps();
     })
@@ -21,7 +20,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-    knex.schema.dropTableIfExists('urls'),
-    knex.schema.dropTableIfExists('folders')
+    knex.schema.dropTableIfExists('options'),
+    knex.schema.dropTableIfExists('polls')
   ])
 };

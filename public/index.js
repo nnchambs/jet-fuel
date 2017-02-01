@@ -1,25 +1,25 @@
 $(document).ready(function(){
-  getFolders()
+  getPolls()
   getURLS()
 });
 
-var folderSubmit = $('.folder-submit').val()
-var folderInput = $('.folder-input').val()
+var pollSubmit = $('.poll-submit').val()
+var pollInput = $('.poll-input').val()
 
-$('.folder-submit').click(function(e) {
+$('.poll-submit').click(function(e) {
   e.preventDefault()
-  var folder = $('.folder-input').val()
+  var poll = $('.poll-input').val()
   $.ajax({
     type: "POST",
-    url: '/folders',
+    url: '/polls',
     data: {
-      foldername: folder
+      pollname: poll
     }
   })
     .then(function(response) {
-      $('.folder-list').empty()
-      getFolders()
-      populateDropdown(folder)
+      $('.poll-list').empty()
+      getPolls()
+      populateDropdown(poll)
       getURLS()
     })
 })
@@ -27,49 +27,49 @@ $('.folder-submit').click(function(e) {
 $('.url-submit').click(function(e) {
   e.preventDefault()
   var url = $('.url-input').val()
-  var folder_id = $('option:selected').attr('id')
-  console.log(folder_id);
+  var poll_id = $('option:selected').attr('id')
+  console.log(poll_id);
   $.ajax({
     type: "POST",
     url: '/urls',
     data: {
       url: url,
-      folder_id: folder_id,
+      poll_id: poll_id,
       created_at: new Date
     }
   })
-  .then($('.folder').empty(), function(){
+  .then($('.poll').empty(), function(){
     getURLS()
   })
 })
 
-function getFolders() {
-  $.get('/folders', function(folders){
-    folders.forEach(function(folder){
-      $('.folder-list').append(
-        `<div class="folder-container">
-        <div class="folder-name-container">
-        <div class="folder-name inline" >${folder.name}</div>
+function getPolls() {
+  $.get('/polls', function(polls){
+    polls.forEach(function(poll){
+      $('.poll-list').append(
+        `<div class="poll-container">
+        <div class="poll-name-container">
+        <div class="poll-name inline" >${poll.name}</div>
         </div>
-        <div class="folder-buttons">
-        <button class="inline folder-sort" onClick='getPop(${folder.id})'>Most Popular Links</button>
-        <button class="inline folder-sort" onClick='getNewest(${folder.id})'>Newest Link</button>
+        <div class="poll-buttons">
+        <button class="inline poll-sort" onClick='getPop(${poll.id})'>Most Popular Links</button>
+        <button class="inline poll-sort" onClick='getNewest(${poll.id})'>Newest Link</button>
         </div>
         </div>
-        <div class="folder" id=${folder.id}></div>
+        <div class="poll" id=${poll.id}></div>
         <br/>
         `
       )
-      populateDropdown(folder)
+      populateDropdown(poll)
     })
   })
 }
 
 function getPop(id) {
   $.get(`/urls/${id}/desc/counter`, function(urls){
-    $(`#${id}.folder`).empty()
+    $(`#${id}.poll`).empty()
     urls.forEach(function(url) {
-      $(`#${url.folder_id}.folder`).append(`
+      $(`#${url.poll_id}.poll`).append(`
         <tr>
           <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
           <td>Created at: ${url.created_at}</td>
@@ -83,9 +83,9 @@ function getPop(id) {
 
 function getNewest(id) {
   $.get(`/urls/${id}/desc/created_at`, function(urls){
-    $(`#${id}.folder`).empty()
+    $(`#${id}.poll`).empty()
     urls.forEach(function(url) {
-      $(`#${url.folder_id}.folder`).append(`
+      $(`#${url.poll_id}.poll`).append(`
         <tr>
           <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
           <td>Created at: ${url.created_at}</td>
@@ -100,7 +100,7 @@ function getNewest(id) {
 function getURLS() {
   $.get('/urls', function(urls) {
     urls.forEach(function(url) {
-      $(`#${url.folder_id}.folder`).append(`
+      $(`#${url.poll_id}.poll`).append(`
           <tr>
             <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
             <td>Created at: ${url.created_at}</td>
@@ -138,14 +138,14 @@ function deleteUrl(id) {
       type: 'delete'
     })
     .then(function(response) {
-      $('.folder').empty()
+      $('.poll').empty()
       getURLS()
     })
   })
 }
 
-populateDropdown = (folder) => {
-  $('.folder-select').append(`
-    <option id=${folder.id}>${folder.name}</option>
+populateDropdown = (poll) => {
+  $('.poll-select').append(`
+    <option id=${poll.id}>${poll.name}</option>
     `)
 }
