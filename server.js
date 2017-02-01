@@ -1,4 +1,5 @@
 const express = require('express');
+const http = require("http");
 const app = express();
 const bodyParser = require('body-parser');
 const md5 = require('md5');
@@ -10,6 +11,8 @@ const database = require('knex')(configuration);
 const knex = require('knex')(configuration);
 const helpers = require('./helpers.js')
 const fs = require('fs')
+
+const server = http.createServer()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,8 +54,8 @@ app.get('/options', (request, response) => {
 app.post('/options', (request, response) => {
   const option = request.body.option
   const poll_id = request.body.poll_id
-  const id = md5('url_id')
-  helpers.postNewUrl(url, poll_id, id, response)
+  const id = md5('poll_id')
+  helpers.postNewOption(option, poll_id, id, response)
 })
 
 // app.patch('/options/:id', (request, response) => {

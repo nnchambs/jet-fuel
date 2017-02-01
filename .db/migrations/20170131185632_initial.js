@@ -1,4 +1,3 @@
-
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('polls', function(table) {
@@ -9,10 +8,9 @@ exports.up = function(knex, Promise) {
     knex.schema.createTableIfNotExists('options', function(table) {
       table.increments('id').primary()
       table.string('option')
-      table.integer('folder_id')
+      table.integer('poll_id')
         .references('id')
         .inTable('polls')
-      table.integer('counter')
       table.timestamps();
     })
   ])

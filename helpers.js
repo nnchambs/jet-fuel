@@ -48,7 +48,7 @@ module.exports = {
   // },
 
   postNewOption: function(option, poll_id, id, response) {
-    database('options').insert({option: option, poll_id: poll_id, counter: 0,  created_at: new Date})
+    database('options').insert({option: option, poll_id: poll_id})
      .then(function() {
        database('options').select()
          .then(function(option) {

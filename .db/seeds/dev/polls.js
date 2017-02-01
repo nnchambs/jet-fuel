@@ -3,7 +3,7 @@ exports.seed = function(knex, Promise) {
   .then(() => {
     return Promise.all([
       knex('polls').insert({
-        name: 'Cool Sites',
+        name: 'Cool Sites'
       })
     ]);
   });
