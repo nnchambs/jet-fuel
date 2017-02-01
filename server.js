@@ -11,64 +11,82 @@ const database = require('knex')(configuration);
 const knex = require('knex')(configuration);
 const helpers = require('./helpers.js')
 const fs = require('fs')
+const socketIo = require('socket.io');
+const port = process.env.PORT || 3000;
 
-const server = http.createServer()
+const server = http.createServer(app)
+                 .listen(port, () => {
+                    console.log(`Listening to port ${port}.`);
+                  });
+
+const io = socketIo(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('port', process.env.PORT || 3000)
 app.locals.title = 'Poehlster'
 
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.get('/', (request, response) => {
-  res.sendfile(__dirname + '/public/index.html')
+  response.sendFile(__dirname + '/public/creation.html')
 })
+
+app.get('/poll', (req, res) => {
+  res.sendFile(__dirname + '/public/poll.html');
+});
 
 app.get('/polls', (request, response) => {
   helpers.getPolls(response)
 })
 
 app.post('/polls', (request, response) => {
-  const poll = request.body.pollname
-  helpers.postNewPoll(poll, response);
+  const poll = request.body.poll
+  const opt_one = request.body.opt_one
+  const opt_two = request.body.opt_two
+  const opt_three = request.body.opt_three
+  const opt_four = request.body.opt_four
+  helpers.postNewPoll(poll, opt_one, opt_two, opt_three, opt_four, response);
 })
 
-app.get('/options', (request, response) => {
-  helpers.getOptions(response)
-})
+//sockets codes
+const votes = {};
 
-// app.get('/options/:id', (request, response) => {
-//   const { id } = request.params
-//   helpers.getOptionsById(id, response)
-// })
+const countVotes = (votes) => {
+  const voteCount = {
+      A: 0,
+      B: 0,
+      C: 0,
+      D: 0
+  };
 
-// app.get('/options/:id/:sortby/:sortparam', (request, response) => {
-//   const poll_id = request.params.id
-//   const sort_by = request.params.sortby
-//   const sort_param = request.params.sortparam
-//   helpers.sortOptions(poll_id, sort_param, sort_by, response)
-// })
+  for (let vote in votes) {
+    voteCount[votes[vote]]++
+  }
 
-app.post('/options', (request, response) => {
-  const option = request.body.option
-  const poll_id = request.body.poll_id
-  const id = md5('poll_id')
-  helpers.postNewOption(option, poll_id, id, response)
-})
+  return voteCount;
+}
 
-// app.patch('/options/:id', (request, response) => {
-//   const { id } = request.params
-//   const { counter, folder_id, shortened_url, url } = request.body
-//   helpers.increaseCounter(id, counter, response)
-// })
+io.on('connection', (socket) => {
+  console.log('A user has connected.', io.engine.clientsCount);
 
-app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is runnning on ${app.get('port')}`)
-})
+  io.sockets.emit('usersConnected', io.engine.clientsCount);
 
-// app.delete('/urls/:id', (request, response) => {
-//   const { id } = request.params
-//   helpers.deleteUrl(id, response)
-// })
+  socket.emit('statusMessage', 'You have connected.');
+
+  socket.on('disconnect', () => {
+    console.log('A user has disconnected.', io.engine.clientsCount);
+    delete votes[socket.id];
+    socket.emit('voteCount', countVotes(votes));
+    io.sockets.emit('userConnection', io.engine.clientsCount);
+  });
+
+  socket.on('message', (channel, message) => {
+    if (channel === 'voteCast') {
+      votes[socket.id] = message;
+      socket.emit('voteCount', countVotes(votes));
+    }
+  });
+});
+
+module.exports = server
