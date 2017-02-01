@@ -7,7 +7,8 @@ exports.seed = function(knex, Promise) {
         opt_one: 'Option 1',
         opt_two: 'Option 2',
         opt_three: 'Option 3',
-        opt_four: 'Option 4'
+        opt_four: 'Option 4',
+        url: "23801"
       })
     ]);
   });

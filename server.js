@@ -46,7 +46,8 @@ app.post('/polls', (request, response) => {
   const opt_two = request.body.opt_two
   const opt_three = request.body.opt_three
   const opt_four = request.body.opt_four
-  helpers.postNewPoll(poll, opt_one, opt_two, opt_three, opt_four, response);
+  const url = shortid.generate()
+  helpers.postNewPoll(poll, opt_one, opt_two, opt_three, opt_four, url, response);
 })
 
 //sockets codes

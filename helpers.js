@@ -4,8 +4,8 @@ const database = require('knex')(configuration);
 
 module.exports = {
 
-  postNewPoll: function(poll, opt_one, opt_two, opt_three, opt_four, response) {
-    database('polls').insert({name: poll, opt_one: opt_one, opt_two: opt_two, opt_three: opt_three, opt_four: opt_four })
+  postNewPoll: function(poll, opt_one, opt_two, opt_three, opt_four, url, response) {
+    database('polls').insert({name: poll, opt_one: opt_one, opt_two: opt_two, opt_three: opt_three, opt_four: opt_four, url: url })
     .then(function() {
       database('polls').select()
         .then(function(polls) {
