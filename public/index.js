@@ -17,4 +17,19 @@ $('.poll-submit').click(function(e) {
     }
   })
   $('.input' ).val('');
+  getPolls()
 })
+
+function getPolls() {
+  $.get('/polls', function(polls){
+    polls.forEach(function(poll){
+      $('.poll-list').append(
+        `<div class="poll-container">
+        <div class="poll-name inline" >${poll.name}</div>
+        <p>${poll.url}</p>
+        </div>
+        `
+      )
+    })
+  })
+}
