@@ -9,6 +9,10 @@ var pollInput = $('.poll-input').val()
 $('.poll-submit').click(function(e) {
   e.preventDefault()
   var poll = $('.poll-input').val()
+  var opt_one = $('.opt-one').val()
+  var opt_two = $('.opt-two').val()
+  var opt_three = $('.opt-three').val()
+  var opt_four = $('.opt-four').val()
   $.ajax({
     type: "POST",
     url: '/polls',

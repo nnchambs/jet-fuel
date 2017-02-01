@@ -31,13 +31,17 @@ app.get('/polls', (request, response) => {
 })
 
 app.post('/polls', (request, response) => {
-  const poll = request.body.pollname
-  helpers.postNewPoll(poll, response);
+  const poll = request.body.poll
+  const opt_one = request.body.opt_one
+  const opt_two = request.body.opt_two
+  const opt_three = request.body.opt_three
+  const opt_four = request.body.opt_four
+  helpers.postNewPoll(poll, opt_one, opt_two, opt_three, opt_four, response);
 })
 
-app.get('/options', (request, response) => {
-  helpers.getOptions(response)
-})
+// app.get('/options', (request, response) => {
+//   helpers.getOptions(response)
+// })
 
 // app.get('/options/:id', (request, response) => {
 //   const { id } = request.params
@@ -51,12 +55,12 @@ app.get('/options', (request, response) => {
 //   helpers.sortOptions(poll_id, sort_param, sort_by, response)
 // })
 
-app.post('/options', (request, response) => {
-  const option = request.body.option
-  const poll_id = request.body.poll_id
-  const id = md5('poll_id')
-  helpers.postNewOption(option, poll_id, id, response)
-})
+// app.post('/options', (request, response) => {
+//   const option = request.body.option
+//   const poll_id = request.body.poll_id
+//   const id = md5('poll_id')
+//   helpers.postNewOption(option, poll_id, id, response)
+// })
 
 // app.patch('/options/:id', (request, response) => {
 //   const { id } = request.params
