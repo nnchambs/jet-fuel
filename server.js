@@ -49,8 +49,44 @@ app.post('/polls', (request, response) => {
   helpers.postNewPoll(poll, opt_one, opt_two, opt_three, opt_four, response);
 })
 
+//sockets codes
+const votes = {};
+
+const countVotes = (votes) => {
+  const voteCount = {
+      A: 0,
+      B: 0,
+      C: 0,
+      D: 0
+  };
+
+  for (let vote in votes) {
+    voteCount[votes[vote]]++
+  }
+
+  return voteCount;
+}
+
 io.on('connection', (socket) => {
   console.log('A user has connected.', io.engine.clientsCount);
+
+  io.sockets.emit('usersConnected', io.engine.clientsCount);
+
+  socket.emit('statusMessage', 'You have connected.');
+
+  socket.on('disconnect', () => {
+    console.log('A user has disconnected.', io.engine.clientsCount);
+    delete votes[socket.id];
+    socket.emit('voteCount', countVotes(votes));
+    io.sockets.emit('userConnection', io.engine.clientsCount);
+  });
+
+  socket.on('message', (channel, message) => {
+    if (channel === 'voteCast') {
+      votes[socket.id] = message;
+      socket.emit('voteCount', countVotes(votes));
+    }
+  });
 });
 
 module.exports = server
