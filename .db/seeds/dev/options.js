@@ -3,25 +3,24 @@ exports.seed = function(knex, Promise) {
   .then(() => {
     return Promise.all([
       knex('options').insert({
-        id: 820922,
-        option: "Option 1",
-        poll_id: 3,
-        counter: 0,
-        created_at: new Date
+        id: 1,
+        option: "option 1",
+        poll_id: 3
       }),
       knex('options').insert({
-        id: 385003,
-        option: "Option 2",
-        poll_id: 3,
-        counter: 0,
-        created_at: new Date
+        id: 2,
+        option: "option 2",
+        poll_id: 3
       }),
       knex('options').insert({
-        id: 485793,
-        option: "Option 3",
-        poll_id: 3,
-        counter: 0,
-        created_at: new Date
+        id: 3,
+        option: "option 3",
+        poll_id: 3
+      }),
+      knex('options').insert({
+        id: 4,
+        option: "option 4",
+        poll_id: 3
       })
     ]);
   });

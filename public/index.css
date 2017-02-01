@@ -4,7 +4,6 @@ body {
   flex-direction: column;
   align-items: center;
   color: white;
-  background: linear-gradient(rgb(85, 117, 237), .2%, black, 99.8%, rgb(85, 117, 237));
 }
 
 a {
