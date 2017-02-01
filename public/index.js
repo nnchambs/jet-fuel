@@ -23,10 +23,11 @@ $('.poll-submit').click(function(e) {
 function getPolls() {
   $.get('/polls', function(polls){
     polls.forEach(function(poll){
+      const updatedUrl = 'poehler.herokuapp.com/' + poll.url
       $('.poll-list').append(
         `<div class="poll-container">
-        <div class="poll-name inline" >${poll.name}</div>
-        <p>${poll.url}</p>
+        <p class="poll-name inline" >${poll.name}</p>
+        <a href=${updatedUrl}>Poll link</a>
         </div>
         `
       )
