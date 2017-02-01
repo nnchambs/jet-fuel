@@ -23,7 +23,7 @@ app.locals.title = 'Poehlster'
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.get('/', (request, response) => {
-  res.sendfile(__dirname + '/public/index.html')
+  response.sendfile(__dirname + '/public/creation.html')
 })
 
 app.get('/polls', (request, response) => {

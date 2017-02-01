@@ -1,6 +1,5 @@
 $(document).ready(function(){
   getPolls()
-  getURLS()
 });
 
 var pollSubmit = $('.poll-submit').val()
@@ -24,27 +23,7 @@ $('.poll-submit').click(function(e) {
       $('.poll-list').empty()
       getPolls()
       populateDropdown(poll)
-      getURLS()
     })
-})
-
-$('.url-submit').click(function(e) {
-  e.preventDefault()
-  var url = $('.url-input').val()
-  var poll_id = $('option:selected').attr('id')
-  console.log(poll_id);
-  $.ajax({
-    type: "POST",
-    url: '/urls',
-    data: {
-      url: url,
-      poll_id: poll_id,
-      created_at: new Date
-    }
-  })
-  .then($('.poll').empty(), function(){
-    getURLS()
-  })
 })
 
 function getPolls() {
@@ -64,86 +43,20 @@ function getPolls() {
         <br/>
         `
       )
-      populateDropdown(poll)
     })
   })
 }
 
-function getPop(id) {
-  $.get(`/urls/${id}/desc/counter`, function(urls){
-    $(`#${id}.poll`).empty()
-    urls.forEach(function(url) {
-      $(`#${url.poll_id}.poll`).append(`
-        <tr>
-          <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
-          <td>Created at: ${url.created_at}</td>
-          <td>Clicks: ${url.counter}</td>
-          <td><button onClick='deleteUrl(${url.id})'>Delete URL</button></td>
-        </tr>
-      `)
-    })
-  })
-}
-
-function getNewest(id) {
-  $.get(`/urls/${id}/desc/created_at`, function(urls){
-    $(`#${id}.poll`).empty()
-    urls.forEach(function(url) {
-      $(`#${url.poll_id}.poll`).append(`
-        <tr>
-          <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
-          <td>Created at: ${url.created_at}</td>
-          <td>Clicks: ${url.counter}</td>
-          <td><button onClick='deleteUrl(${url.id})'>Delete URL</button></td>
-        </tr>
-      `)
-    })
-  })
-}
-
-function getURLS() {
-  $.get('/urls', function(urls) {
-    urls.forEach(function(url) {
-      $(`#${url.poll_id}.poll`).append(`
-          <tr>
-            <td><a id=${url.id} onClick='counter(${url.id})' >${url.shortened_url}</a></td>
-            <td>Created at: ${url.created_at}</td>
-            <td>Clicks: ${url.counter}</td>
-            <td><button onClick='deleteUrl(${url.id})'>Delete URL</button></td>
-          </tr>
-      `)
-    })
-  })
-}
-
-
-
-function counter(id) {
-  $.get(`/urls/${id}`, function(data) {
-    console.log(data[0]);
-    const powerUp = data[0].counter + 1
+function deletePoll(id) {
+  $.get(`/polls/${id}`, function() {
 
     $.ajax({
-      url: `/urls/${data[0].id}`,
-      type: 'patch',
-      data: {
-        counter: powerUp
-      }
-    })
-    window.location.href = `${data[0].url}`
-  })
-}
-
-function deleteUrl(id) {
-  $.get(`/urls/${id}`, function() {
-
-    $.ajax({
-      url: `/urls/${id}`,
+      url: `/polls/${id}`,
       type: 'delete'
     })
     .then(function(response) {
       $('.poll').empty()
-      getURLS()
+      getPolls()
     })
   })
 }

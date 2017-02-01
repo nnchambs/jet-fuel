@@ -26,3 +26,4 @@ module.exports = {
         console.log('Sorry, unable to retrieve polls')
       })
   }
+}
