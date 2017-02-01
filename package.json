@@ -1,21 +1,21 @@
 {
-  "name": "shor.ty",
+  "name": "poehlster",
   "version": "1.0.0",
-  "description": "A poor man's URL l shortener",
+  "description": "The poll creator",
   "main": "server.js",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nnchambs/jet-fuel.git"
+    "url": "git+https://github.com/andrewLcrist/poehler"
   },
-  "author": "Nick Chambers & Andrew Crist",
+  "author": "Andrew Crist",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nnchambs/jet-fuel/issues"
+    "url": "https://github.com/andrewLcrist/poehler/issues"
   },
-  "homepage": "https://github.com/nnchambs/jet-fuel#readme",
+  "homepage": "https://github.com/andrewLcrist/poehler#readme",
   "dependencies": {
     "body-parser": "^1.16.0",
     "express": "^4.14.0",
