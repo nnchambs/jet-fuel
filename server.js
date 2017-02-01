@@ -29,7 +29,7 @@ app.locals.title = 'Poehlster'
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.get('/', (request, response) => {
-  response.sendfile(__dirname + '/public/creation.html')
+  response.sendFile(__dirname + '/public/creation.html')
 })
 
 app.get('/poll', (req, res) => {
@@ -49,8 +49,8 @@ app.post('/polls', (request, response) => {
   helpers.postNewPoll(poll, opt_one, opt_two, opt_three, opt_four, response);
 })
 
-
-
 io.on('connection', (socket) => {
-  console.log('A user has connected.');
+  console.log('A user has connected.', io.engine.clientsCount);
 });
+
+module.exports = server
