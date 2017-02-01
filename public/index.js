@@ -16,14 +16,18 @@ $('.poll-submit').click(function(e) {
     type: "POST",
     url: '/polls',
     data: {
-      pollname: poll
+      poll: poll,
+      opt_one: opt_one,
+      opt_two: opt_two,
+      opt_three: opt_three,
+      opt_four: opt_four
     }
   })
-    .then(function(response) {
-      $('.poll-list').empty()
-      getPolls()
-      populateDropdown(poll)
-    })
+    // .then(function(response) {
+    //   $('.poll-list').empty()
+    //   getPolls()
+    //   populateDropdown(poll)
+    // })
 })
 
 function getPolls() {
