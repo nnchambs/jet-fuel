@@ -7,18 +7,27 @@
     <title>Poehlster</title>
   </head>
   <body>
+    <header>
+      <div class="auth">
+        <img alt="avatar" class="avatar" style="display:none;">
+        <p class="username">Welcome <span class="nickname"></span></p>
+        <button type="submit" class="btn-login">Sign In</button>
+        <button type="submit" class="btn-logout" style="display:none;">Sign Out</button>
+      </div>
+    </header>
     <h1 class="poll-name"></h1>
     <div id="connection-count"></div>
     <div id="status-message"></div>
-
         <div id="choices">
-          <button class="opt-one">1</button><p class="opt-one-text"></p>
-          <button class="opt-two">2</button><p class="opt-two-text"></p>
-          <button class="opt-three">3</button><p class="opt-three-text"></p>
-          <button class="opt-four">4</button><p class="opt-four-text"></p>
+          <button class="opt-one">1</button><p class="1"></p>
+          <button class="opt-two">2</button><p class="2"></p>
+          <button class="opt-three">3</button><p class="3"></p>
+          <button class="opt-four">4</button><p class="4"></p>
         </div>
+    <div class="votes"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/client.js"></script>
+    <script src="/poll.js"></script>
+    <script src="/auth.js"></script>
   </body>
 </html>
