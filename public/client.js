@@ -5,6 +5,7 @@ const connectionCount = document.getElementById('connection-count');
 
 $.get(`/polls/${pollId}`, function(poll){
   poll.forEach(poll => {
+    $('.poll-name').text(poll.name)
     $('.opt-one-text').text(poll.opt_one)
     $('.opt-two-text').text(poll.opt_two)
     $('.opt-three-text').text(poll.opt_three)
