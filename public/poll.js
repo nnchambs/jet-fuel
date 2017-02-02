@@ -42,5 +42,8 @@ for (let i = 0; i < buttons.length; i++) {
 }
 
 socket.on('voteCount', (votes) => {
-  console.log(votes);
+  for(var i = 1; i <= 4; i++){
+    var votesArray = Object.values(votes)
+    $(`.${i}`).text(`${votesArray[i-1]}`)
+  }
 });
