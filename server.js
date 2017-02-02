@@ -60,10 +60,10 @@ const votes = {};
 
 const countVotes = (votes) => {
   const voteCount = {
-      A: 0,
-      B: 0,
-      C: 0,
-      D: 0
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0
   };
 
   for (let vote in votes) {

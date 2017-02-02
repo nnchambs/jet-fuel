@@ -40,6 +40,6 @@ for (let i = 0; i < buttons.length; i++) {
   });
 }
 
-// socket.on('voteCount', (votes) => {
-//   console.log(votes);
-// });
+socket.on('voteCount', (votes) => {
+  console.log(votes);
+});
