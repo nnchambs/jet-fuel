@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       table.string('opt_one');
       table.string('opt_two');
       table.string('opt_three');
-      table.string('opt_foud');
+      table.string('opt_four');
       table.string('url');
     })
   ])

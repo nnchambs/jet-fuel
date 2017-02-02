@@ -24,20 +24,25 @@ const io = socketIo(server);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.locals.title = 'Poehlster'
+app.locals.title = 'Poehler'
 
 app.use(express.static(path.join(__dirname, '/public')))
 
-app.get('/create_poll', (request, response) => {
+app.use('/form', (request, response) => {
   response.sendFile(__dirname + '/public/creation.html')
 })
 
-app.get('/poll', (req, res) => {
+app.use('/poll', (req, res) => {
   res.sendFile(__dirname + '/public/poll.html');
 });
 
 app.get('/polls', (request, response) => {
   helpers.getPolls(response)
+})
+
+app.get('/polls/:id', (request, response) => {
+  const { id } = request.params
+  helpers.getPollById(id, response)
 })
 
 app.post('/polls', (request, response) => {
@@ -55,10 +60,10 @@ const votes = {};
 
 const countVotes = (votes) => {
   const voteCount = {
-      A: 0,
-      B: 0,
-      C: 0,
-      D: 0
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0
   };
 
   for (let vote in votes) {
