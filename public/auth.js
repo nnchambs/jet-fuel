@@ -56,7 +56,7 @@ $(document).ready(function() {
 
     var logout = function() {
       localStorage.removeItem('id_token');
-      window.location.href = "/";
+      window.location.href = "https://www.youtube.com/watch?v=PwjY6s7yfSk&t=38s";
     };
 
     retrieve_profile();
