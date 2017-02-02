@@ -28,11 +28,11 @@ app.locals.title = 'Poehler'
 
 app.use(express.static(path.join(__dirname, '/public')))
 
-app.get('/', (request, response) => {
+app.use('/form', (request, response) => {
   response.sendFile(__dirname + '/public/creation.html')
 })
 
-app.get('/poll', (req, res) => {
+app.use('/poll', (req, res) => {
   res.sendFile(__dirname + '/public/poll.html');
 });
 

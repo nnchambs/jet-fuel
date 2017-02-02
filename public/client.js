@@ -1,14 +1,26 @@
+var pollId = window.location.href.match(/[^\/]*$/)[0]
+
 const socket = io();
-const helpers = require('../helpers.js')
-
-
 const connectionCount = document.getElementById('connection-count');
 
-$.get('polls/:id', (request, response) {
-  const { id } = request.params
-  helpers.getPollById(id, response)
-  .then(console.log(response);)
+$.get(`/polls/${pollId}`, function(poll){
+  poll.forEach(poll => {
+    $('.opt-one-text').text(poll.opt_one)
+    $('.opt-two-text').text(poll.opt_two)
+    $('.opt-three-text').text(poll.opt_three)
+    $('.opt-four-text').text(poll.opt_four)
+  })
 })
+
+function getPollById(id, response) {
+  database('polls').select().table('polls').where('id', id)
+    .then(function(poll) {
+      response.status(200).json(poll);
+    })
+    .catch(function(error) {
+      console.error(error)
+    })
+}
 
 socket.on('usersConnected', (count) => {
   connectionCount.innerText = 'Connected Users: ' + count;
@@ -28,6 +40,6 @@ for (let i = 0; i < buttons.length; i++) {
   });
 }
 
-socket.on('voteCount', (votes) => {
-  console.log(votes);
-});
+// socket.on('voteCount', (votes) => {
+//   console.log(votes);
+// });
