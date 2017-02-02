@@ -12,6 +12,7 @@ const knex = require('knex')(configuration);
 const helpers = require('./helpers.js')
 const fs = require('fs')
 const socketIo = require('socket.io');
+require('dotenv').config()
 const port = process.env.PORT || 3000;
 
 const server = http.createServer(app)
@@ -43,6 +44,12 @@ app.get('/polls', (request, response) => {
 app.get('/polls/:id', (request, response) => {
   const { id } = request.params
   helpers.getPollById(id, response)
+})
+
+app.get('/authkeys', (req, res) => {
+  authId = process.env.AUTH0_CLIENT_ID
+  authDomain = process.env.AUTH0_DOMAIN
+  res.status(200).json({authId, authDomain})
 })
 
 app.post('/polls', (request, response) => {

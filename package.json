@@ -18,6 +18,7 @@
   "homepage": "https://github.com/andrewLcrist/poehler#readme",
   "dependencies": {
     "body-parser": "^1.16.0",
+    "dotenv": "^4.0.0",
     "express": "^4.14.1",
     "jquery": "^3.1.1",
     "knex": "^0.12.6",
