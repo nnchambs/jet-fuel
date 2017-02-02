@@ -25,5 +25,15 @@ module.exports = {
       .catch(function(error) {
         console.log('Sorry, unable to retrieve polls')
       })
+  },
+
+  getPollById: function(id, response) {
+    database('polls').select().table('polls').where('id', id)
+      .then(function(poll) {
+        response.status(200).json(poll);
+      })
+      .catch(function(error) {
+        console.error(error)
+      })
   }
 }

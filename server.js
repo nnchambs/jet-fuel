@@ -24,7 +24,7 @@ const io = socketIo(server);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.locals.title = 'Poehlster'
+app.locals.title = 'Poehler'
 
 app.use(express.static(path.join(__dirname, '/public')))
 
@@ -38,6 +38,11 @@ app.get('/poll', (req, res) => {
 
 app.get('/polls', (request, response) => {
   helpers.getPolls(response)
+})
+
+app.get('/polls/:id', (request, response) => {
+  const { id } = request.params
+  helpers.getPollById(id, response)
 })
 
 app.post('/polls', (request, response) => {

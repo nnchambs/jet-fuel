@@ -1,6 +1,14 @@
 const socket = io();
+const helpers = require('../helpers.js')
+
 
 const connectionCount = document.getElementById('connection-count');
+
+$.get('polls/:id', (request, response) {
+  const { id } = request.params
+  helpers.getPollById(id, response)
+  .then(console.log(response);)
+})
 
 socket.on('usersConnected', (count) => {
   connectionCount.innerText = 'Connected Users: ' + count;
